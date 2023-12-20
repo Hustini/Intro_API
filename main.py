@@ -12,19 +12,22 @@ trump_api = 'https://api.tronalddump.io/random/quote'
 def main():
     for widgets in root.winfo_children():
         widgets.destroy()
-    chuck_norris_btn = tk.Button(root, text='Chuck Norris', command=lambda: get_joke(chuck_norris_url, chuck_norris_btn))
+    chuck_norris_btn = tk.Button(root, text='Chuck Norris', command=lambda: get_joke(chuck_norris_url))
     chuck_norris_btn.grid(column=1, row=1)
-    trump_btn = tk.Button(root, text='Trump', command=lambda: get_joke(trump_api, trump_btn))
+    trump_btn = tk.Button(root, text='Trump', command=lambda: get_joke(trump_api))
     trump_btn.grid(column=2, row=1)
     root.mainloop()
 
 
-def get_joke(api, btn):
+def get_joke(api):
+    # fetch value
     response = requests.get(api)
     print(response.status_code)
     data = response.json()
     print(data)
     joke = data['value']
+
+    # place value on screen
     for widgets in root.winfo_children():
         widgets.destroy()
     lbl = tk.Label(root, text=joke)
