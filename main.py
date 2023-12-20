@@ -6,7 +6,7 @@ root = tk.Tk()
 root.geometry('500x500')
 root.title('API hub')
 chuck_norris_url = 'https://api.chucknorris.io/jokes/random'
-trump_api = 'https://www.tronalddump.io/'
+trump_api = 'https://api.tronalddump.io/random/quote'
 
 
 def main():
@@ -25,7 +25,8 @@ def get_joke(api, btn):
     data = response.json()
     print(data)
     joke = data['value']
-    btn.destroy()
+    for widgets in root.winfo_children():
+        widgets.destroy()
     lbl = tk.Label(root, text=joke)
     lbl.pack(anchor='center', expand=True)
     return_btn = tk.Button(root, text='Return', command=main)
