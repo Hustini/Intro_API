@@ -2,22 +2,31 @@ import requests
 import tkinter as tk
 
 
-def get_joke():
-    response = requests.get(f'https://api.chucknorris.io/jokes/random')
-    print(response.status_code)
-    data = response.json()
-    joke = data['value']
-    print(joke)
+root = tk.Tk()
+root.geometry('500x500')
+root.title('API hub')
+chuck_norris_url = 'https://api.chucknorris.io/jokes/random'
 
 
 def main():
-
-    root = tk.Tk()
-    root.geometry('200x200')
-    root.title('API hub')
-    chuck_norris_btn = tk.Button(root, text='Chuck Norris', command=get_joke)
+    for widgets in root.winfo_children():
+        widgets.destroy()
+    chuck_norris_btn = tk.Button(root, text='Chuck Norris', command=lambda: get_joke(chuck_norris_url, chuck_norris_btn))
     chuck_norris_btn.grid(column=1, row=1)
     root.mainloop()
+
+
+def get_joke(api, btn):
+    response = requests.get(api)
+    print(response.status_code)
+    data = response.json()
+    joke = data['value']
+    btn.destroy()
+    lbl = tk.Label(root, text=joke)
+    lbl.pack(anchor='center', expand=True)
+    return_btn = tk.Button(root, text='Return', command=main)
+    return_btn.pack(anchor='center', expand=True)
+    print(joke)
 
 
 if __name__ == '__main__':
